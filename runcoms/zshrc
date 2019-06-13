@@ -11,3 +11,50 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+setopt NOCLOBBER
+
+# have autocorrect ignore stuff in relative paths
+autoload -Uz add-zsh-hook
+function _correct_ignore_relpaths {
+  setopt local_options null_glob
+  local p paths filenames
+  typeset -a filenames
+  paths=(${(M)path:#.*})
+  for p in $paths ; do
+    filenames+=($p/*(:t) $p/.*(:t))
+  done
+  export CORRECT_IGNORE="(${(j:|:)filenames})"
+}
+# dammit, I can't get zsh to recognize CORRECT_IGNORE
+#_correct_ignore_relpaths
+#add-zsh-hook chpwd _correct_ignore_relpaths
+
+# make Control-R do history searches
+bindkey '^R' history-incremental-pattern-search-backward
+
+#if is-callable 'dircolors' ; then
+#  if zstyle -t ':prezto:module:utility:ls' color; then
+#    if [[ $TERM == *"256"* ]] ; then
+#      eval "$(dircolors --sh /etc/DIR_COLORS.256color)"
+#    fi
+#  fi
+#fi
+
+# osx-specific crap
+if [[ "$OSTYPE" == "darwin"* ]] ; then
+  # ensure homebrew coreutils are installed
+  brew list | grep -q coreutils &> /dev/null || echo -e '\n\n    You probably want to brew install coreutils, champ\n\n'
+  alias kdiff3='open -a /Applications/kdiff3.app'
+  alias crontab='VIM_CRONTAB=true EDITOR=vim crontab'
+fi
+
+# general aliases
+whence -f view &> /dev/null || alias view='vim -R'
+alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
+alias atopd='sudo atop -l -d -D 2'
+
+function fix_osx_dns_search {
+  local ADAPTER
+  networksetup -listallnetworkservices | tail -n+2 | while read ADAPTER ; do networksetup -setsearchdomains "$ADAPTER" internal.convoy.com convoy.com ; done
+}

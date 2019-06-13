@@ -1,0 +1,66 @@
+#
+# Andrew's riff on the sorin theme; c.f. prompt_sorin_setup
+#
+# Author (sorta):
+#   Andrew Myers <myers@pobox.com>
+#
+# Original Author:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Load dependencies.
+pmodload 'helper'
+
+function prompt_myers_precmd {
+  local stat=$?
+  local signal
+  _prompt_myers_stat=""
+  if [[ $stat -ne 0 ]] ; then
+    if [[ $stat -gt 128 ]] ; then
+      signal="$(kill -l $[$stat - 128] 2>/dev/null)"
+      [[ -n "$signal" ]] && signal=" ($signal)"
+    fi
+    _prompt_myers_stat="%F{red}[Exit %F{white}$stat$signal%F{red}]"$'\n'
+  fi
+
+  _prompt_myers_host=$(echo $HOST | sed -E 's/.local$|\.[^.]+\.(com|net|org)$//')
+
+  local pwd
+  pwd="${PWD/#$HOME/~}"
+
+  if [[ "$pwd" == (#m)[/~] ]]; then
+    _prompt_myers_pwd="$MATCH"
+    unset MATCH
+  else
+    _prompt_myers_pwd="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
+  fi
+
+  # Get Git repository information.
+  if (( $+functions[_dotfiles_scm_info] )); then
+    scm_info_string=$(_dotfiles_scm_info)
+  fi
+}
+
+function prompt_myers_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+
+  add-zsh-hook precmd prompt_myers_precmd
+
+  # Set editor-info parameters.
+  zstyle ':prezto:module:editor:info:completing' format '%B%F{yellow}...%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary' format '%F{yellow}$%f'
+  zstyle ':prezto:module:editor:info:keymap:primary:overwrite'format ' %F{yellow}♺%f'
+  zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{yellow}¢%f'
+
+  # Define prompts.
+  PROMPT='${_prompt_myers_stat}%F{yellow}${_prompt_myers_host} %F{cyan}${_prompt_myers_pwd}%f${scm_info_string}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
+  #RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]}'
+  SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+}
+
+prompt_myers_setup "$@"
