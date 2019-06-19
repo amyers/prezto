@@ -37,6 +37,7 @@ zstyle ':prezto:load' pmodule \
   'tmux' \
   'command-not-found' \
   'osx' \
+  'git' \
   'completion' \
   'prompt'
 
