@@ -20,24 +20,16 @@ function prompt_myers_precmd {
       signal="$(kill -l $[$stat - 128] 2>/dev/null)"
       [[ -n "$signal" ]] && signal=" ($signal)"
     fi
-    _prompt_myers_stat="%F{red}[Exit %F{white}$stat$signal%F{red}] "
+    _prompt_myers_stat="%F{red}✘ ${stat}${signal}%f "
   fi
 
   _prompt_myers_host=$(hostname | sed -E 's/\..*//')
-
-  local pwd
-  pwd="${PWD/#$HOME/~}"
-
-  if [[ "$pwd" == (#m)[/~] ]]; then
-    _prompt_myers_pwd="$MATCH"
-    unset MATCH
-  else
-    _prompt_myers_pwd="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
-  fi
+  _prompt_myers_pwd=$(prompt-pwd)
 
   if (( $+functions[git-info] )); then
     git-info
     scm_info_string="${git_info[status]}"
+    [[ -n "$scm_info_string" ]] && scm_info_string=" $scm_info_string"
   fi
 }
 
@@ -54,29 +46,28 @@ function prompt_myers_setup {
   # Set editor-info parameters.
   zstyle ':prezto:module:editor:info:completing' format '%B%F{yellow}...%f%b'
   zstyle ':prezto:module:editor:info:keymap:primary' format '%F{yellow}$%f'
-  zstyle ':prezto:module:editor:info:keymap:primary:overwrite'format ' %F{yellow}♺%f'
   zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{yellow}¢%f'
 
   # Set git-info parameters.
   zstyle ':prezto:module:git:info' verbose 'yes'
   zstyle ':prezto:module:git:info:action' format '%F{7}:%f%%B%F{9}%s%f%%b'
-  zstyle ':prezto:module:git:info:added' format ' %%B%F{2}✚%f%%b'
-  zstyle ':prezto:module:git:info:ahead' format ' %%B%F{13}⬆%f%%b'
-  zstyle ':prezto:module:git:info:behind' format ' %%B%F{13}⬇%f%%b'
-  zstyle ':prezto:module:git:info:branch' format ' %%B%F{2}%b%f%%b'
-  zstyle ':prezto:module:git:info:commit' format ' %%B%F{3}%.7c%f%%b'
-  zstyle ':prezto:module:git:info:deleted' format ' %%B%F{1}✖%f%%b'
-  zstyle ':prezto:module:git:info:modified' format ' %%B%F{4}✱%f%%b'
-  zstyle ':prezto:module:git:info:position' format ' %%B%F{13}%p%f%%b'
-  zstyle ':prezto:module:git:info:renamed' format ' %%B%F{5}➜%f%%b'
-  zstyle ':prezto:module:git:info:stashed' format ' %%B%F{6}✭%f%%b'
-  zstyle ':prezto:module:git:info:unmerged' format ' %%B%F{3}═%f%%b'
-  zstyle ':prezto:module:git:info:untracked' format ' %%B%F{7}◼%f%%b'
+  zstyle ':prezto:module:git:info:added' format '%%B%F{2}✚%f%%b '
+  zstyle ':prezto:module:git:info:ahead' format '%%B%F{13}⬆%f%%b '
+  zstyle ':prezto:module:git:info:behind' format '%%B%F{13}⬇%f%%b '
+  zstyle ':prezto:module:git:info:branch' format '%%B%F{2}%b%f%%b '
+  zstyle ':prezto:module:git:info:commit' format '%%B%F{3}%.7c%f%%b '
+  zstyle ':prezto:module:git:info:deleted' format '%%B%F{1}✖%f%%b '
+  zstyle ':prezto:module:git:info:modified' format '%%B%F{4}✱%f%%b '
+  zstyle ':prezto:module:git:info:position' format '%%B%F{13}%p%f%%b '
+  zstyle ':prezto:module:git:info:renamed' format '%%B%F{5}➜%f%%b '
+  zstyle ':prezto:module:git:info:stashed' format '%%B%F{6}✭%f%%b '
+  zstyle ':prezto:module:git:info:unmerged' format '%%B%F{3}═%f%%b '
+  zstyle ':prezto:module:git:info:untracked' format '%%B%F{7}◼%f%%b '
   zstyle ':prezto:module:git:info:keys' format \
     'status' '%b%p%c%s%A%B%S%a%d%m%r%U%u'
 
   # Define prompts.
-  PROMPT='${_prompt_myers_stat}%F{yellow}${_prompt_myers_host} %F{cyan}${_prompt_myers_pwd}%f${scm_info_string}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
+  PROMPT='${_prompt_myers_stat}%F{yellow}${_prompt_myers_host}%f %F{cyan}${_prompt_myers_pwd}%f${scm_info_string}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
