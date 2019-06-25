@@ -54,7 +54,13 @@ whence -f view &> /dev/null || alias view='vim -R'
 alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 alias atopd='sudo atop -l -d -D 2'
 
+# functions functions functions
 function fix_osx_dns_search {
   local ADAPTER
   networksetup -listallnetworkservices | tail -n+2 | while read ADAPTER ; do networksetup -setsearchdomains "$ADAPTER" internal.convoy.com convoy.com ; done
+}
+
+function mdless {
+  local FILE=${1:=README.md}
+  mdcat $FILE | less -r
 }
