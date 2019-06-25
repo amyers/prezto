@@ -53,7 +53,7 @@ fi
 whence -f view &> /dev/null || alias view='vim -R'
 alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 alias atopd='sudo atop -l -d -D 2'
-alias updatedb='sudo /usr/libexec/locate.updatedb'
+alias updatedb='PATH=/sbin:/bin:/usr/sbin:/usr/bin sudo /usr/libexec/locate.updatedb'
 
 # functions functions functions
 function fix_osx_dns_search {
