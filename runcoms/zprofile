@@ -131,6 +131,13 @@ if [[ -e $HOME/.convoy ]] ; then
 fi
 
 #
+# gcloud
+#
+
+_prepend path $HOME/bin/google-cloud-sdk/bin
+if [ -f $HOME/bin/google-cloud-sdk/completion.zsh.inc ]; then . $HOME/bin/google-cloud-sdk/completion.zsh.inc; fi
+
+#
 # Things That Must Be Last
 #
 
