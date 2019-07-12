@@ -45,7 +45,6 @@ bindkey '^R' history-incremental-pattern-search-backward
 if [[ "$OSTYPE" == "darwin"* ]] ; then
   # ensure homebrew coreutils are installed
   brew list | grep -q coreutils &> /dev/null || echo -e '\n\n    You probably want to brew install coreutils, champ\n\n'
-  alias kdiff3='open -a /Applications/kdiff3.app'
   alias crontab='VIM_CRONTAB=true EDITOR=vim crontab'
 fi
 
