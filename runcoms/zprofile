@@ -144,3 +144,4 @@ if [ -f $HOME/bin/google-cloud-sdk/completion.zsh.inc ]; then . $HOME/bin/google
 _prepend path $HOME/go/bin
 _prepend path $HOME/bin
 _prepend path $HOME/local/bin
+_prepend path $HOME/.cargo/bin
