@@ -229,3 +229,5 @@ zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 # before deleting or overwriting files. Set to 'no' to disable this safer
 # behavior.
 zstyle ':prezto:module:utility' safe-ops 'no'
+zstyle ':prezto:module:utility:ls' dirs-first 'no'
+
