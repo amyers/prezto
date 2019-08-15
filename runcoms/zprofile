@@ -21,6 +21,9 @@ export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
 
+# aws shit
+export AWS_SDK_LOAD_CONFIG=1
+
 #
 # Language
 #
