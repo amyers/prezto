@@ -12,7 +12,7 @@ fi
 
 # Customize to your needs...
 
-setopt NOCLOBBER
+setopt CLOBBER
 
 # have autocorrect ignore stuff in relative paths
 autoload -Uz add-zsh-hook
@@ -47,13 +47,15 @@ if [[ "$OSTYPE" == "darwin"* ]] ; then
   brew list | grep -q coreutils &> /dev/null || echo -e '\n\n    You probably want to brew install coreutils, champ\n\n'
   alias crontab='VIM_CRONTAB=true EDITOR=vim crontab'
 fi
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # general aliases
 whence -f view &> /dev/null || alias view='vim -R'
 alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 alias atopd='sudo atop -l -d -D 2'
-alias updatedb='PATH=/sbin:/bin:/usr/sbin:/usr/bin sudo /usr/libexec/locate.updatedb'
-# [[ -x /usr/local/bin/nvim ]] && alias vi=nvim
+alias pip=pip3
+alias python=python3
+alias wtf='wtf -o'
 
 # functions functions functions
 function fix_osx_dns_search {
