@@ -68,6 +68,9 @@ function mdless {
   mdcat $FILE | less -r
 }
 
+# exports
+export GITHUB_TOKEN=$(cat ~/.github-token)
+
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [[ -f /Users/amyers/code/migrate/auto2/archipelago-service/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/amyers/code/migrate/auto2/archipelago-service/node_modules/tabtab/.completions/serverless.zsh
