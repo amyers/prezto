@@ -11,8 +11,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-
 setopt CLOBBER
+
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 # have autocorrect ignore stuff in relative paths
 autoload -Uz add-zsh-hook
