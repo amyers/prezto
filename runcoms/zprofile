@@ -111,6 +111,9 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 #
 
 if [[ -e $HOME/.convoy ]] ; then
+    if [[ $EUID -eq 0 ]] ; then
+        export ZSH_DISABLE_COMPFIX=true
+    fi
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
