@@ -151,4 +151,4 @@ _prepend path $HOME/go/bin
 _prepend path $HOME/local/bin
 _prepend path $HOME/.cargo/bin
 _prepend path $HOME/bin
-_prepend path ./bin
+_append path ./bin
