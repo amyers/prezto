@@ -13,6 +13,7 @@ fi
 # Customize to your needs...
 setopt CLOBBER
 export HISTFILE=~/.zhistory
+export SAVEHIST=100000
 
 # have autocorrect ignore stuff in relative paths
 autoload -Uz add-zsh-hook
