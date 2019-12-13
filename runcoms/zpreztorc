@@ -231,3 +231,5 @@ zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 zstyle ':prezto:module:utility' safe-ops 'no'
 zstyle ':prezto:module:utility:ls' dirs-first 'no'
 
+# and, my prefs
+zstyle ':prezto:module:git:alias' skip 'yes'

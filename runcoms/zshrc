@@ -57,6 +57,7 @@ alias atopd='sudo atop -l -d -D 2'
 alias pip=pip3
 alias python=python3
 alias wtf='wtf -o'
+alias redocker='$(aws-okta exec prod-ro -- aws ecr get-login --no-include-email)'
 
 # functions functions functions
 function fix_osx_dns_search {
@@ -69,5 +70,26 @@ function mdless {
   mdcat $FILE | less -r
 }
 
+function gc {
+  git clone https://github.com/convoyinc/$1 ${2:-~/code/convoyinc}/$1
+}
+
 # exports
 export GITHUB_TOKEN=$(cat ~/.github-token)
+# convenience envvars
+export UARTI="https://packages.convoy.com/artifactory/api/npm/npm/"
+export UARTIC="https://packages.convoy.com/artifactory/api/npm/convoy-npm/"
+export UNPMJS="https://registry.npmjs.org/"
+export ARTI="--registry=https://packages.convoy.com/artifactory/api/npm/npm/"
+export ARTIC="--registry=https://packages.convoy.com/artifactory/api/npm/convoy-npm/"
+export NPMJS="--registry=https://registry.npmjs.org/"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/slss.zsh
