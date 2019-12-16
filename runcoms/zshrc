@@ -13,6 +13,7 @@ fi
 # Customize to your needs...
 setopt CLOBBER
 export HISTFILE=~/.zhistory
+export HISTSIZE=100000
 export SAVEHIST=100000
 
 # have autocorrect ignore stuff in relative paths
@@ -70,9 +71,11 @@ function mdless {
   mdcat $FILE | less -r
 }
 
+# git stuff
 function gc {
   git clone https://github.com/convoyinc/$1 ${2:-~/code/convoyinc}/$1
 }
+alias gitwipe='git restore --staged . &> /dev/null && git restore . &> /dev/null && git clean -f &> /dev/null && git status'
 
 # exports
 export GITHUB_TOKEN=$(cat ~/.github-token)
