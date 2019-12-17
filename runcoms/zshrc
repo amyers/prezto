@@ -73,9 +73,9 @@ function mdless {
 
 # git stuff
 function gc {
-  git clone https://github.com/convoyinc/$1 ${2:-~/code/convoyinc}/$1
+  git clone https://github.com/convoyinc/$1 ${2:-~/code/convoyinc}/$1 ; cd ${2:-~/code/convoyinc}/$1
 }
-alias gitwipe='git restore --staged . &> /dev/null && git restore . &> /dev/null && git clean -f &> /dev/null && git status'
+alias gitwipe='git restore --staged . &> /dev/null && git restore . &> /dev/null && git clean -f -d &> /dev/null && git status'
 
 # exports
 export GITHUB_TOKEN=$(cat ~/.github-token)
