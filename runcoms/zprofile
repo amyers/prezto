@@ -1,4 +1,4 @@
-#
+e
 # Executes commands at login pre-zshrc.
 #
 # Authors:
@@ -129,7 +129,7 @@ if [[ -e $HOME/.convoy ]] ; then
     export PGHOST=localhost
     export PGPORT=5432
 
-    path=(./node_modules/.bin $path)
+    _prepend path ./node_modules/.bin
 
     # kubectl/helm autocompletion
     if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi
