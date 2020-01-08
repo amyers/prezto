@@ -36,18 +36,20 @@ fi
 #
 
 _prepend () {
-  local PATHTYPE DIR
+  local PATHTYPE DIR ALWAYS
   PATHTYPE=$1
   DIR=$2
-  if [[ -d "$DIR" ]] ; then
+  ALWAYS=${3:-false}
+  if [[ -d "$DIR" ]] || $ALWAYS; then
     eval "$PATHTYPE=($DIR \$$PATHTYPE)"
   fi
 }
 _append () {
-  local PATHTYPE DIR
+  local PATHTYPE DIR ALWAYS
   PATHTYPE=$1
   DIR=$2
-  if [[ -d "$DIR" ]] ; then
+  ALWAYS=${3:-false}
+  if [[ -d "$DIR" ]] || $ALWAYS; then
     eval "$PATHTYPE=(\$$PATHTYPE $DIR)"
   fi
 }
@@ -128,7 +130,7 @@ if [[ -e $HOME/.convoy ]] ; then
     export PGHOST=localhost
     export PGPORT=5432
 
-    _prepend path ./node_modules/.bin
+    _prepend path ./node_modules/.bin true
 
     # kubectl/helm autocompletion
     if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi
