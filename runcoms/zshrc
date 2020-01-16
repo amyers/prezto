@@ -59,6 +59,7 @@ alias pip=pip3
 alias python=python3
 alias wtf='wtf -o'
 alias redocker='$(aws-okta exec prod-ro -- aws ecr get-login --no-include-email)'
+alias redockerw='$(aws-okta exec prod-rw -- aws ecr get-login --no-include-email)'
 
 # functions functions functions
 function fix_osx_dns_search {
