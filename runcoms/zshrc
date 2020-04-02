@@ -67,6 +67,10 @@ alias python=python3
 alias wtf='wtf -o'
 alias redocker='$(aws-okta exec prod-ro -- aws ecr get-login --no-include-email)'
 alias redockerw='$(aws-okta exec prod-rw -- aws ecr get-login --no-include-email)'
+alias fixscr='displayplacer "id:5FA4EB08-E21C-1F68-8224-91170AE46DF8 res:2560x1440 hz:60 color_depth:8 scaling:off origin:(0,0) degree:0" "id:3B8ED8DD-ED24-F674-8846-7B33AF9315C0 res:1680x1050 color_depth:4 scaling:on origin:(-1680,160) degree:0" "id:C281C76C-B62C-E064-C876-9A82F0762BD7 res:2560x1440 hz:60 color_depth:8 scaling:off origin:(2560,0) degree:0"'
+alias oman='man -M /usr/share/man'
+alias wipecache='yarn cache clean && npm cache clean --force'
+alias yarn='noglob yarn'
 
 # functions functions functions
 function fix_osx_dns_search {
@@ -83,16 +87,23 @@ function mdless {
 function gc {
   git clone https://github.com/convoyinc/$1 ${2:-~/code/convoyinc}/$1 ; cd ${2:-~/code/convoyinc}/$1
 }
+function ggrep {
+  git grep -P "$@" | grep -vP '^\.'
+}
 alias gitwipe='git restore --staged . &> /dev/null && git restore . &> /dev/null && git clean -f -d &> /dev/null && git status'
+
 
 # exports
 export GITHUB_TOKEN=$(cat ~/.github-token)
+export CIRCLECI_TOKEN=$(cat ~/.circleci-token)
 # convenience envvars
 export UARTI="https://packages.convoy.com/artifactory/api/npm/npm/"
 export UARTIC="https://packages.convoy.com/artifactory/api/npm/convoy-npm/"
+export UARTIT="https://packages.convoy.com/artifactory/api/npm/test-npm/"
 export UNPMJS="https://registry.npmjs.org/"
 export ARTI="--registry=https://packages.convoy.com/artifactory/api/npm/npm/"
 export ARTIC="--registry=https://packages.convoy.com/artifactory/api/npm/convoy-npm/"
+export ARTIT="--registry=https://packages.convoy.com/artifactory/api/npm/test-npm/"
 export NPMJS="--registry=https://registry.npmjs.org/"
 
 # tabtab source for serverless package
@@ -107,3 +118,7 @@ export NPMJS="--registry=https://registry.npmjs.org/"
 
 export YVM_DIR=/usr/local/opt/yvm
 [ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
+
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
