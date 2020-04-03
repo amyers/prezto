@@ -67,6 +67,7 @@ alias python=python3
 alias wtf='wtf -o'
 alias redocker='$(aws-okta exec prod-ro -- aws ecr get-login --no-include-email)'
 alias redockerw='$(aws-okta exec prod-rw -- aws ecr get-login --no-include-email)'
+alias boatmurder='echo -e "\nBEFORE\n"; docker system df; echo -e "\nSTOPPING\n"; docker stop -t3 $(docker ps -a -q); echo -e "\nPRUNING\n"; docker system prune -a -f --volumes; echo -e "\nAFTER\n";  docker system df'
 alias fixscr='displayplacer "id:5FA4EB08-E21C-1F68-8224-91170AE46DF8 res:2560x1440 hz:60 color_depth:8 scaling:off origin:(0,0) degree:0" "id:3B8ED8DD-ED24-F674-8846-7B33AF9315C0 res:1680x1050 color_depth:4 scaling:on origin:(-1680,160) degree:0" "id:C281C76C-B62C-E064-C876-9A82F0762BD7 res:2560x1440 hz:60 color_depth:8 scaling:off origin:(2560,0) degree:0"'
 alias oman='man -M /usr/share/man'
 alias wipecache='yarn cache clean && npm cache clean --force'
