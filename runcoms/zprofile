@@ -1,40 +1,24 @@
 # Executes commands at login pre-zshrc.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
-#
-# Browser
-#
-
+### Browser
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
 
-#
-# Editors
-#
-
+### Editors
 export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
 
-# aws shit
+### aws shit
 export AWS_SDK_LOAD_CONFIG=1
 
-#
-# Language
-#
-
+### Language
 if [[ -z "$LANG" ]]; then
   export LANG='en_US.UTF-8'
 fi
 
-#
-# Paths
-#
-
+### path stuff
 _prepend () {
   local PATHTYPE DIR ALWAYS
   PATHTYPE=$1
@@ -57,11 +41,6 @@ _append () {
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-# Set the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
-
 # Set the list of directories that Zsh searches for programs.
 path=(
   /usr/local/{sbin,bin}
@@ -72,7 +51,7 @@ path=(
 manpath=(
   $(manpath)
 )
-# anonymous function for local bindings
+# (anonymous function for local var binding)
 function {
   local DIR
   for DIR in $(ls -d /usr/local/opt/*/libexec) ; do
@@ -81,10 +60,7 @@ function {
   done;
 }
 
-#
-# Less
-#
-
+#### Less
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
 # Remove -X and -F (exit if the content fits on one screen) to enable it.
@@ -96,21 +72,15 @@ if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
-#
-# Temporary files
-#
-
+### Temporary files
 if [[ ! -d "$TMPDIR" ]]; then
   export TMPDIR="/tmp/$LOGNAME"
   mkdir -p -m 700 "$TMPDIR"
 fi
-
+# used for shell temp files
 TMPPREFIX="${TMPDIR%/}/zsh"
 
-#
-# Convoy specific stuff
-#
-
+### Convoy specific stuff
 if [[ -e $HOME/.convoy ]] ; then
     if [[ $EUID -eq 0 ]] ; then
         export ZSH_DISABLE_COMPFIX=true
@@ -137,17 +107,24 @@ if [[ -e $HOME/.convoy ]] ; then
     if [ $commands[helm] ]; then source <(helm completion zsh); fi
 fi
 
-#
 # gcloud
-#
-
 _prepend path $HOME/bin/google-cloud-sdk/bin
-if [ -f $HOME/bin/google-cloud-sdk/completion.zsh.inc ]; then . $HOME/bin/google-cloud-sdk/completion.zsh.inc; fi
+if [ -f $HOME/bin/google-cloud-sdk/completion.zsh.inc ]; then
+  . $HOME/bin/google-cloud-sdk/completion.zsh.inc
+fi
 
-#
+# ruby
+_prepend path /usr/local/lib/ruby/gems/2.7.0/bin
+_prepend path /usr/local/opt/ruby/bin
+export LDFLAGS="-L/usr/local/opt/ruby/lib"
+export CPPFLAGS="-I/usr/local/opt/ruby/include"
+export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
+
+# jenv
+_prepend path $HOME/.jenv/bin
+eval "$(jenv init -)"
+
 # Things That Must Be Last
-#
-
 _prepend path $HOME/go/bin
 _prepend path $HOME/local/bin
 _prepend path $HOME/.cargo/bin

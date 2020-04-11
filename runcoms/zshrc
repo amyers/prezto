@@ -72,16 +72,12 @@ alias fixscr='displayplacer "id:5FA4EB08-E21C-1F68-8224-91170AE46DF8 res:2560x14
 alias oman='man -M /usr/share/man'
 alias wipecache='yarn cache clean && npm cache clean --force'
 alias yarn='noglob yarn'
+alias mdless='mdless -I -P'
 
 # functions functions functions
 function fix_osx_dns_search {
   local ADAPTER
   networksetup -listallnetworkservices | tail -n+2 | while read ADAPTER ; do networksetup -setsearchdomains "$ADAPTER" internal.convoy.com convoy.com ; done
-}
-
-function mdless {
-  local FILE=${1:=README.md}
-  mdcat $FILE | less -r
 }
 
 # git stuff
@@ -92,11 +88,14 @@ function ggrep {
   git grep -P "$@" | grep -vP '^\.'
 }
 alias gitwipe='git restore --staged . &> /dev/null && git restore . &> /dev/null && git clean -f -d &> /dev/null && git status'
-
+export GIT_PAGER='bat'
+export BAT_STYLE='plain'
+export BAT_THEME='ansi-light'
 
 # exports
 export GITHUB_TOKEN=$(cat ~/.github-token)
 export CIRCLECI_TOKEN=$(cat ~/.circleci-token)
+export NGROK_TOKEN=$(cat ~/.ngrok-token)
 # convenience envvars
 export UARTI="https://packages.convoy.com/artifactory/api/npm/npm/"
 export UARTIC="https://packages.convoy.com/artifactory/api/npm/convoy-npm/"
@@ -106,20 +105,14 @@ export ARTI="--registry=https://packages.convoy.com/artifactory/api/npm/npm/"
 export ARTIC="--registry=https://packages.convoy.com/artifactory/api/npm/convoy-npm/"
 export ARTIT="--registry=https://packages.convoy.com/artifactory/api/npm/test-npm/"
 export NPMJS="--registry=https://registry.npmjs.org/"
+# deployer-service exports
+export DEPLOYER_GITHUB_APP_ID="$(cat ~/.deployer-service/deployer_github_app_id.txt)"
+export DEPLOYER_GITHUB_PRIVATE_KEY_PATH=~/.deployer-service/deployer_github_private_key.pem
+export DEPLOYER_GITHUB_PRIVATE_KEY="$(cat $DEPLOYER_GITHUB_PRIVATE_KEY_PATH)"
+export DEPLOYER_CIRCLECI_API_TOKEN=${CIRCLECI_TOKEN}
+export DEPLOYER_SLACK_OAUTH_TOKEN="$(cat ~/.deployer-service/deployer_circle_api_token.txt)"
+export DEPLOYER_SLACK_WARN="@amyers"
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/amyers/.shepherd/2019-09-23-artifactory-migration-iii/repos/convoyinc/twilio-webhook/node_modules/tabtab/.completions/slss.zsh
-
+# stuff needed for other things
 export YVM_DIR=/usr/local/opt/yvm
 [ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
-
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
