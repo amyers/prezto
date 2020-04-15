@@ -111,7 +111,7 @@ export DEPLOYER_GITHUB_PRIVATE_KEY_PATH=~/.deployer-service/deployer_github_priv
 export DEPLOYER_GITHUB_PRIVATE_KEY="$(cat $DEPLOYER_GITHUB_PRIVATE_KEY_PATH)"
 export DEPLOYER_CIRCLECI_API_TOKEN=${CIRCLECI_TOKEN}
 export DEPLOYER_SLACK_OAUTH_TOKEN="$(cat ~/.deployer-service/deployer_circle_api_token.txt)"
-export DEPLOYER_SLACK_WARN="@amyers"
+export DEPLOYER_CHANNEL_DEV='#amyers-test'
 
 # stuff needed for other things
 export YVM_DIR=/usr/local/opt/yvm
