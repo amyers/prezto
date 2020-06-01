@@ -109,9 +109,13 @@ export NPMJS="--registry=https://registry.npmjs.org/"
 export DEPLOYER_GITHUB_APP_ID="$(cat ~/.deployer-service/deployer_github_app_id.txt)"
 export DEPLOYER_GITHUB_PRIVATE_KEY_PATH=~/.deployer-service/deployer_github_private_key.pem
 export DEPLOYER_GITHUB_PRIVATE_KEY="$(cat $DEPLOYER_GITHUB_PRIVATE_KEY_PATH)"
-export DEPLOYER_CIRCLECI_API_TOKEN=${CIRCLECI_TOKEN}
+export DEPLOYER_CIRCLE_API_TOKEN=${CIRCLECI_TOKEN}
 export DEPLOYER_SLACK_OAUTH_TOKEN="$(cat ~/.deployer-service/deployer_circle_api_token.txt)"
 export DEPLOYER_CHANNEL_DEV='#amyers-test'
+export DEPLOYER_BASE_URL='http://localhost:44444'
+# can remove these after PR#10 is merged
+export config_slack_channel="$DEPLOYER_CHANNEL_DEV"
+export DEPLOYER_CIRCLECI_API_TOKEN=${CIRCLECI_TOKEN}
 
 # stuff needed for other things
 export YVM_DIR=/usr/local/opt/yvm
